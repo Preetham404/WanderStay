@@ -1,0 +1,830 @@
+<% layout("layouts/boilerplate") %>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #0d0d0d;
+      --ink-secondary: #4a4a4a;
+      --ink-muted: #9a9a9a;
+      --surface: #f8f6f2;
+      --surface-card: #ffffff;
+      --border: #e5e1da;
+      --border-focus: #0d0d0d;
+      --gold: #c9a84c;
+      --gold-light: #f0e6c8;
+      --success: #3d7a5a;
+      --error: #b84040;
+      --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 12px 48px rgba(0, 0, 0, 0.06);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+      --transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--surface);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .listing-page {
+      min-height: 100vh;
+      padding: 3rem 1.25rem 5rem;
+      position: relative;
+    }
+
+    .listing-page::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 55vw;
+      height: 55vw;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .listing-container {
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .listing-header {
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+    }
+
+    .listing-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .listing-eyebrow-line {
+      width: 28px;
+      height: 1.5px;
+      background: var(--gold);
+    }
+
+    .listing-eyebrow-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .listing-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.4rem;
+    }
+
+    .listing-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .listing-subtitle {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    .form-card {
+      background: var(--surface-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.65s cubic-bezier(0.4, 0, 0.2, 1) 0.25s forwards;
+    }
+
+    .form-section {
+      padding: 2rem 2.5rem;
+      position: relative;
+    }
+
+    .form-section+.form-section {
+      border-top: 1px solid var(--border);
+    }
+
+    .form-section:first-child {
+      background: linear-gradient(135deg, #fefdfb 0%, #f9f7f3 100%);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-num {
+      width: 26px;
+      height: 26px;
+      background: var(--ink);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .field-group {
+      margin-bottom: 1.35rem;
+    }
+
+    .field-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+      margin-bottom: 0.45rem;
+    }
+
+    .field-label .req {
+      color: var(--gold);
+      margin-left: 2px;
+    }
+
+    .form-control,
+    .form-select {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.78rem 1rem;
+      font-size: 0.93rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      background: #fdfdfd;
+      transition: var(--transition);
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+    }
+
+    .form-control:hover,
+    .form-select:hover {
+      border-color: #c8c4bd;
+      background: #fff;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--border-focus);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(13, 13, 13, 0.06);
+      outline: none;
+    }
+
+    .form-control::placeholder {
+      color: var(--ink-muted);
+      font-weight: 300;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 115px;
+      line-height: 1.6;
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    .form-select option[value=""][disabled] {
+      color: var(--ink-muted);
+    }
+
+    .was-validated .form-control:valid,
+    .was-validated .form-select:valid {
+      border-color: var(--border) !important;
+      background-image: none !important;
+      box-shadow: none !important;
+    }
+
+    .was-validated .form-control:valid:focus,
+    .was-validated .form-select:valid:focus {
+      border-color: var(--border-focus) !important;
+      box-shadow: 0 0 0 3px rgba(13, 13, 13, 0.06) !important;
+    }
+
+    .was-validated .form-select:valid {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 1rem center !important;
+    }
+
+    .was-validated .form-control:invalid,
+    .was-validated .form-select:invalid {
+      border-color: var(--error) !important;
+      background-image: none !important;
+    }
+
+    .was-validated .form-select:invalid {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 1rem center !important;
+    }
+
+    .was-validated .form-control:invalid:focus,
+    .was-validated .form-select:invalid:focus {
+      border-color: var(--error) !important;
+      box-shadow: 0 0 0 3px rgba(184, 64, 64, 0.08) !important;
+    }
+
+    .field-hint {
+      font-size: 0.78rem;
+      color: var(--error);
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    .was-validated .form-control:invalid ~ .field-hint,
+    .was-validated .form-select:invalid ~ .field-hint {
+      display: block;
+    }
+
+    .file-upload-area {
+      position: relative;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 2.25rem 1.5rem;
+      text-align: center;
+      background: #fdfcfa;
+      transition: var(--transition);
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .file-upload-area::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(201, 168, 76, 0.04));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .file-upload-area:hover {
+      border-color: var(--gold);
+      background: #fefcf5;
+    }
+
+    .file-upload-area:hover::before {
+      opacity: 1;
+    }
+
+    .file-upload-area.has-file {
+      border-style: solid;
+      border-color: var(--ink);
+      background: #fafaf9;
+    }
+
+    .file-upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.85rem;
+      transition: var(--transition);
+    }
+
+    .file-upload-area:hover .upload-icon-wrap {
+      background: var(--gold);
+      transform: scale(1.05);
+    }
+
+    .upload-icon-wrap svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--gold);
+      transition: stroke 0.25s;
+    }
+
+    .file-upload-area:hover .upload-icon-wrap svg {
+      stroke: white;
+    }
+
+    .upload-main-text {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .upload-main-text span {
+      color: var(--gold);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .upload-sub-text {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      font-weight: 300;
+    }
+
+    .file-name-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.7rem;
+      background: var(--ink);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: var(--transition);
+    }
+
+    .file-name-badge.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .input-with-prefix {
+      position: relative;
+    }
+
+    .input-prefix {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      background: #f5f3ef;
+      border: 1.5px solid var(--border);
+      border-right: none;
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      pointer-events: none;
+      transition: var(--transition);
+    }
+
+    .input-with-prefix .form-control {
+      padding-left: 54px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .input-with-prefix:focus-within .input-prefix {
+      border-color: var(--border-focus);
+      background: #eeecea;
+    }
+
+    .country-wrapper {
+      position: relative;
+    }
+
+    .country-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      max-height: 240px;
+      overflow-y: auto;
+      display: none;
+      z-index: 999;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .country-dropdown::-webkit-scrollbar { width: 4px; }
+    .country-dropdown::-webkit-scrollbar-track { background: transparent; }
+    .country-dropdown::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .country-option {
+      padding: 0.65rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--ink-secondary);
+      transition: background 0.15s, color 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .country-option:hover { background: var(--gold-light); color: var(--ink); }
+    .country-option.selected { background: var(--ink); color: white; font-weight: 500; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 560px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+    .form-footer {
+      padding: 1.75rem 2.5rem 2.25rem;
+      background: linear-gradient(to bottom, #fdfcfa, #f8f6f2);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-note {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .footer-note svg { width: 14px; height: 14px; stroke: var(--gold); }
+
+    .submit-btn {
+      position: relative;
+      background: var(--ink);
+      color: white;
+      border: none;
+      border-radius: 100px;
+      padding: 0.85rem 2.8rem;
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold), #a8873e);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .submit-btn:hover::before { opacity: 1; }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .submit-btn:active { transform: translateY(0); box-shadow: none; }
+
+    .submit-btn span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .submit-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      transition: transform 0.25s ease;
+    }
+
+    .submit-btn:hover svg { transform: translateX(3px); }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .form-section:nth-child(1) { animation-delay: 0.35s; }
+    .form-section:nth-child(2) { animation-delay: 0.45s; }
+    .form-section:nth-child(3) { animation-delay: 0.55s; }
+
+    .form-footer {
+      opacity: 0;
+      animation: fadeUp 0.55s ease 0.65s forwards;
+    }
+
+    @media (max-width: 640px) {
+      .form-section { padding: 1.5rem 1.25rem; }
+      .form-footer {
+        padding: 1.5rem 1.25rem;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .submit-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+
+  <div class="listing-page">
+    <div class="listing-container">
+      <div class="listing-header">
+        <div class="listing-eyebrow">
+          <div class="listing-eyebrow-line"></div>
+          <span class="listing-eyebrow-text">New Listing</span>
+        </div>
+        <h1 class="listing-title">Share your <em>space</em></h1>
+        <p class="listing-subtitle">Complete the form below to publish your property on the platform.</p>
+      </div>
+
+      <div class="form-card">
+        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-num">1</div>
+              <span class="section-title">Property Details</span>
+              <div class="section-line"></div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Title <span class="req">*</span></label>
+              <input name="listing[title]" type="text" class="form-control"
+                placeholder="Give your listing a memorable name" required>
+              <span class="field-hint">Please enter a title.</span>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Description <span class="req">*</span></label>
+              <textarea name="listing[description]" class="form-control"
+                placeholder="Describe the atmosphere, highlights, and what makes your place exceptional…"
+                required></textarea>
+              <span class="field-hint">Please write a description.</span>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Category <span class="req">*</span></label>
+              <select name="listing[category]" class="form-select" required>
+                <option value="" disabled selected>Choose a category</option>
+                <option value="Trending">✦ Trending</option>
+                <option value="Rooms">Rooms</option>
+                <option value="Iconic Cities">Iconic Cities</option>
+                <option value="Mountains">Mountains</option>
+                <option value="Castles">Castles</option>
+                <option value="Amazing Pools">Amazing Pools</option>
+                <option value="Camping">Camping</option>
+                <option value="Farms">Farms</option>
+                <option value="Arctic">Arctic</option>
+                <option value="Beachfront">Beachfront</option>
+                <option value="Luxury">Luxury</option>
+                <option value="Pet Friendly">Pet Friendly</option>
+              </select>
+              <span class="field-hint">Please select a category.</span>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-num">2</div>
+              <span class="section-title">Listing Image</span>
+              <div class="section-line"></div>
+            </div>
+
+            <div class="field-group">
+              <div class="file-upload-area" id="fileUploadWrapper">
+                <input name="listing[image]" type="file" id="fileInput" accept="image/*" required>
+                <div class="upload-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                </div>
+                <p class="upload-main-text">Drop your image here or <span>browse</span></p>
+                <p class="upload-sub-text">Supports JPG, PNG, WEBP — max 10MB</p>
+                <div class="file-name-badge" id="fileNameBadge">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span id="fileNameText">No file</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="section-header">
+              <div class="section-num">3</div>
+              <span class="section-title">Pricing & Location</span>
+              <div class="section-line"></div>
+            </div>
+
+            <div class="field-row" style="margin-bottom: 1.35rem;">
+              <div class="field-group" style="margin-bottom:0">
+                <label class="field-label">Price / Night <span class="req">*</span></label>
+                <div class="input-with-prefix">
+                  <span class="input-prefix">₹</span>
+                  <input name="listing[price]" type="number" class="form-control" placeholder="1200" required>
+                </div>
+                <span class="field-hint">Enter a price.</span>
+              </div>
+
+              <div class="field-group" style="margin-bottom:0">
+                <label class="field-label">Country <span class="req">*</span></label>
+                <div class="country-wrapper">
+                  <input type="text" id="countrySearch" class="form-control" placeholder="Search country…" autocomplete="off">
+                  <input type="hidden" name="listing[country]" id="countryHidden" required>
+                  <div id="countryDropdown" class="country-dropdown"></div>
+                </div>
+                <span class="field-hint" id="countryError">Please select a valid country.</span>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Location <span class="req">*</span></label>
+              <input name="listing[location]" type="text" class="form-control" placeholder="e.g. Goa, Karnataka" required>
+              <span class="field-hint">Please enter a location.</span>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <p class="footer-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              Your listing will be reviewed before going live.
+            </p>
+            <button type="submit" class="submit-btn">
+              <span>
+                Publish Listing
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const fileUploadWrapper = document.getElementById('fileUploadWrapper');
+    const fileNameBadge = document.getElementById('fileNameBadge');
+    const fileNameText = document.getElementById('fileNameText');
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        const name = fileInput.files[0].name;
+        fileNameText.textContent = name.length > 28 ? name.slice(0, 25) + '…' : name;
+        fileNameBadge.classList.add('visible');
+        fileUploadWrapper.classList.add('has-file');
+      } else {
+        fileNameBadge.classList.remove('visible');
+        fileUploadWrapper.classList.remove('has-file');
+      }
+    });
+
+    const countries = [
+      "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia",
+      "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
+      "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
+      "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic",
+      "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Democratic Republic of the Congo", "Costa Rica",
+      "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+      "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
+      "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada",
+      "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India",
+      "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan",
+      "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
+      "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta",
+      "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia",
+      "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand",
+      "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau",
+      "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
+      "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines",
+      "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles",
+      "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
+      "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+      "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago",
+      "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
+      "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela",
+      "Vietnam", "Yemen", "Zambia", "Zimbabwe", "Cook Islands", "Kosovo", "Niue", "Turkiye", "England",
+      "Scotland", "Wales", "Northern Ireland", "Puerto Rico", "Hong Kong", "Macau", "Greenland",
+      "Faroe Islands", "Bermuda", "Cayman Islands", "British Virgin Islands", "US Virgin Islands", "Guam",
+      "American Samoa", "Turks and Caicos Islands", "Gibraltar", "Isle of Man", "Jersey", "Guernsey",
+      "Aruba", "Curacao", "Sint Maarten", "New Caledonia", "French Polynesia", "Reunion", "Martinique",
+      "Guadeloupe", "Mayotte", "Saint Martin", "Saint Barthelemy", "Wallis and Futuna",
+      "Saint Pierre and Miquelon", "French Guiana", "Antarctica"
+    ];
+
+    const searchInput = document.getElementById('countrySearch');
+    const hiddenInput = document.getElementById('countryHidden');
+    const dropdown = document.getElementById('countryDropdown');
+    const countryError = document.getElementById('countryError');
+
+    function renderDropdown(filter = '') {
+      const filtered = countries.filter(c => c.toLowerCase().includes(filter.toLowerCase()));
+      if (!filtered.length || !filter) { dropdown.style.display = 'none'; return; }
+
+      dropdown.innerHTML = filtered.map(c =>
+        `<div class="country-option ${hiddenInput.value === c ? 'selected' : ''}" data-value="${c}">${c}</div>`
+      ).join('');
+      dropdown.style.display = 'block';
+
+      dropdown.querySelectorAll('.country-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          searchInput.value = opt.dataset.value;
+          hiddenInput.value = opt.dataset.value;
+          dropdown.style.display = 'none';
+          searchInput.classList.remove('is-invalid');
+          countryError.style.display = 'none';
+        });
+      });
+    }
+
+    searchInput.addEventListener('input', () => { hiddenInput.value = ''; renderDropdown(searchInput.value); });
+    searchInput.addEventListener('focus', () => { if (searchInput.value) renderDropdown(searchInput.value); });
+    document.addEventListener('click', e => { if (!e.target.closest('.country-wrapper')) dropdown.style.display = 'none'; });
+
+    document.querySelector('form').addEventListener('submit', e => {
+      const form = e.target;
+      if (!hiddenInput.value) {
+        e.preventDefault();
+        e.stopPropagation();
+        searchInput.classList.add('is-invalid');
+        countryError.style.display = 'block';
+      }
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    });
+  </script>

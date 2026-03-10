@@ -1,0 +1,480 @@
+<style>
+    .ws-flash-wrap {
+        position: fixed;
+        top: 80px;
+        right: 24px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: min(420px, calc(100vw - 32px));
+        pointer-events: none;
+    }
+
+
+    .ws-toast {
+        pointer-events: all;
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+
+        opacity: 0;
+        transform: translateX(60px) rotate(1.5deg);
+        animation: wsDrop 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .ws-toast.ws-leaving {
+        animation: wsFly 0.4s cubic-bezier(0.7, 0, 1, 0.6) forwards;
+    }
+
+    @keyframes wsDrop {
+        0% {
+            opacity: 0;
+            transform: translateX(60px) rotate(2deg) scale(0.92);
+        }
+
+        60% {
+            opacity: 1;
+        }
+
+        80% {
+            transform: translateX(-4px) rotate(-0.3deg) scale(1.01);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0) rotate(0deg) scale(1);
+        }
+    }
+
+    @keyframes wsFly {
+        0% {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            max-height: 200px;
+            margin-bottom: 0;
+        }
+
+        30% {
+            transform: translateX(8px) scale(1.02);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateX(80px) scale(0.9);
+            max-height: 0;
+            margin-bottom: -12px;
+        }
+    }
+
+
+    .ws-toast.ws-success {
+        background: #0d1f16;
+        border: 1px solid rgba(74, 200, 120, 0.25);
+        box-shadow:
+            0 0 0 1px rgba(74, 200, 120, 0.08),
+            0 8px 32px rgba(0, 0, 0, 0.28),
+            0 32px 64px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .ws-toast.ws-error {
+        background: #1f0d10;
+        border: 1px solid rgba(232, 80, 80, 0.25);
+        box-shadow:
+            0 0 0 1px rgba(232, 80, 80, 0.08),
+            0 8px 32px rgba(0, 0, 0, 0.28),
+            0 32px 64px rgba(0, 0, 0, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+
+    .ws-toast::before {
+        content: '';
+        position: absolute;
+        top: -30px;
+        left: -30px;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(50px);
+        opacity: 0.35;
+    }
+
+    .ws-success::before {
+        background: #4ac878;
+    }
+
+    .ws-error::before {
+        background: #e85050;
+    }
+
+
+    .ws-toast::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        opacity: 0.5;
+    }
+
+    .ws-success::after {
+        background: linear-gradient(90deg, transparent 0%, #4ac878 40%, #c9a84c 70%, transparent 100%);
+    }
+
+    .ws-error::after {
+        background: linear-gradient(90deg, transparent 0%, #e85050 40%, #c9a84c 70%, transparent 100%);
+    }
+
+
+    .ws-body {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 18px 16px 16px 18px;
+        position: relative;
+        z-index: 1;
+    }
+
+
+    .ws-icon-wrap {
+        flex-shrink: 0;
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ws-success .ws-icon-wrap {
+        background: rgba(74, 200, 120, 0.15);
+        color: #6ee89a;
+        border: 1px solid rgba(74, 200, 120, 0.2);
+    }
+
+    .ws-error .ws-icon-wrap {
+        background: rgba(232, 80, 80, 0.15);
+        color: #f08080;
+        border: 1px solid rgba(232, 80, 80, 0.2);
+    }
+
+
+    .ws-icon-wrap::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        animation: wsIconPulse 2.5s ease-in-out infinite;
+    }
+
+    .ws-success .ws-icon-wrap::after {
+        box-shadow: 0 0 0 0 rgba(74, 200, 120, 0.4);
+    }
+
+    .ws-error .ws-icon-wrap::after {
+        box-shadow: 0 0 0 0 rgba(232, 80, 80, 0.4);
+    }
+
+    @keyframes wsIconPulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(120, 220, 150, 0.35);
+        }
+
+        60% {
+            box-shadow: 0 0 0 10px rgba(120, 220, 150, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(120, 220, 150, 0);
+        }
+    }
+
+
+    .ws-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .ws-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 5px;
+    }
+
+    .ws-tag-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .ws-success .ws-tag-dot {
+        background: #4ac878;
+    }
+
+    .ws-error .ws-tag-dot {
+        background: #e85050;
+    }
+
+    .ws-tag-text {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .ws-success .ws-tag-text {
+        color: #4ac878;
+    }
+
+    .ws-error .ws-tag-text {
+        color: #e85050;
+    }
+
+    .ws-message {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.88);
+    }
+
+
+    .ws-brand {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    .ws-brand-line {
+        flex: 1;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .ws-brand-name {
+        font-family: 'Nunito', sans-serif;
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(201, 168, 76, 0.6);
+    }
+
+    .ws-brand-dot {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: rgba(201, 168, 76, 0.4);
+    }
+
+
+    .ws-close {
+        flex-shrink: 0;
+        align-self: flex-start;
+        margin-top: 16px;
+        margin-right: 14px;
+        width: 28px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 10px;
+        transition: all 0.25s ease;
+        padding: 0;
+        position: relative;
+        z-index: 2;
+    }
+
+    .ws-close:hover {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.22);
+        color: rgba(255, 255, 255, 0.9);
+        transform: rotate(90deg) scale(1.1);
+    }
+
+    .ws-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        animation: wsBar 5s linear forwards;
+    }
+
+    .ws-success .ws-progress {
+        background: linear-gradient(90deg, #2e7d55, #4ac878, #c9a84c);
+    }
+
+    .ws-error .ws-progress {
+        background: linear-gradient(90deg, #9b1c1c, #e85050, #c9a84c);
+    }
+
+    @keyframes wsBar {
+        from {
+            width: 100%;
+        }
+
+        to {
+            width: 0%;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .ws-flash-wrap {
+            top: auto;
+            bottom: 20px;
+            left: 12px;
+            right: 12px;
+            width: auto;
+        }
+
+        @keyframes wsDrop {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.93);
+            }
+
+            80% {
+                transform: translateY(-4px) scale(1.01);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes wsFly {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+                max-height: 200px;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(30px);
+                max-height: 0;
+                margin-bottom: -12px;
+            }
+        }
+    }
+</style>
+
+<div class="ws-flash-wrap">
+
+    <% if (success && success.length> 0) { %>
+        <div class="ws-toast ws-success">
+            <div class="ws-body">
+                <div class="ws-icon-wrap">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div class="ws-text">
+                    <div class="ws-tag">
+                        <div class="ws-tag-dot"></div>
+                        <span class="ws-tag-text">Success</span>
+                    </div>
+                    <div class="ws-message">
+                        <%= success[0] %>
+                    </div>
+                    <div class="ws-brand">
+                        <div class="ws-brand-line"></div>
+                        <div class="ws-brand-dot"></div>
+                        <span class="ws-brand-name">WanderStay</span>
+                        <div class="ws-brand-dot"></div>
+                        <div class="ws-brand-line"></div>
+                    </div>
+                </div>
+            </div>
+            <button class="ws-close" aria-label="Dismiss">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="ws-progress"></div>
+        </div>
+        <% } %>
+
+            <% if (error && error.length> 0) { %>
+                <div class="ws-toast ws-error">
+                    <div class="ws-body">
+                        <div class="ws-icon-wrap">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                        </div>
+                        <div class="ws-text">
+                            <div class="ws-tag">
+                                <div class="ws-tag-dot"></div>
+                                <span class="ws-tag-text">Error</span>
+                            </div>
+                            <div class="ws-message">
+                                <%= error[0] %>
+                            </div>
+                            <div class="ws-brand">
+                                <div class="ws-brand-line"></div>
+                                <div class="ws-brand-dot"></div>
+                                <span class="ws-brand-name">WanderStay</span>
+                                <div class="ws-brand-dot"></div>
+                                <div class="ws-brand-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ws-close" aria-label="Dismiss">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="ws-progress"></div>
+                </div>
+                <% } %>
+
+</div>
+
+<script>
+    (function () {
+        const DURATION = 5000;
+        const RESUME_DELAY = 1200;
+
+        document.querySelectorAll('.ws-toast').forEach(function (toast) {
+            const progress = toast.querySelector('.ws-progress');
+            let timer;
+
+            function dismiss() {
+                if (toast.classList.contains('ws-leaving')) return;
+                toast.classList.add('ws-leaving');
+                setTimeout(function () { toast.remove(); }, 420);
+            }
+
+            function startTimer(ms) {
+                clearTimeout(timer);
+                timer = setTimeout(dismiss, ms);
+            }
+
+            startTimer(DURATION);
+
+            toast.addEventListener('mouseenter', function () {
+                clearTimeout(timer);
+                if (progress) progress.style.animationPlayState = 'paused';
+            });
+
+            toast.addEventListener('mouseleave', function () {
+                if (progress) progress.style.animationPlayState = 'running';
+                startTimer(RESUME_DELAY);
+            });
+
+            toast.querySelector('.ws-close').addEventListener('click', dismiss);
+        });
+    })();
+</script>

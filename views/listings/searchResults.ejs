@@ -1,0 +1,174 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="container mt-4">
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <h4># Filters</h4>
+                <div class="card p-3">
+                    <form action="/listings/search" method="GET" class="row g-3">
+                        <input type="hidden" name="q" value="<%= searchTerm %>">
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Category</label>
+                            <select name="category" class="form-select">
+                                <option value="all" <%=selectedCategory==='all' ? 'selected' : '' %>>All Categories
+                                </option>
+                                <% categories.forEach(cat=> { %>
+                                    <option value="<%= cat %>" <%=selectedCategory===cat ? 'selected' : '' %>>
+                                        <%= cat %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Price Range (€/night)</label>
+                            <div class="d-flex gap-2">
+                                <input type="number" name="minPrice" class="form-control" placeholder="Min"
+                                    value="<%= minPrice %>">
+                                <input type="number" name="maxPrice" class="form-control" placeholder="Max"
+                                    value="<%= maxPrice %>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">
+                                Apply Filters
+                            </button>
+                        </div>
+
+                        <% if (selectedCategory !=='all' || minPrice || maxPrice) { %>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <a href="/listings/search?q=<%= searchTerm %>" class="btn btn-outline-secondary w-100">
+                                    Clear Filters
+                                </a>
+                            </div>
+                            <% } %>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card p-3 bg-light">
+                    <h6>## Search Tips</h6>
+                    <ul class="mb-0">
+                        <li>Try searching by location: "New York", "Paris"</li>
+                        <li>Search by property type: "apartment", "villa"</li>
+                        <li>Combine words: "beach house", "mountain cabin"</li>
+                        <li>Use price: "100" for listings around €100</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-12">
+                <h1># Search Results for "<%= searchTerm %>"</h1>
+                <p class="text-muted">
+                    <strong>Found <%= listings.length %> result(s)</strong>
+                    <% if (listings.length> 0) { %>
+                        - <strong>Top matches shown first</strong>
+                        <% } %>
+                </p>
+
+
+                <% if (selectedCategory !=='all' || minPrice || maxPrice) { %>
+                    <div class="mb-2">
+                        <small class="text-muted">Active filters:</small>
+                        <% if (selectedCategory !=='all' ) { %>
+                            <span class="badge bg-primary ms-2">Category: <%= selectedCategory %></span>
+                            <% } %>
+                                <% if (minPrice) { %>
+                                    <span class="badge bg-success ms-2">Min: €<%= minPrice %></span>
+                                    <% } %>
+                                        <% if (maxPrice) { %>
+                                            <span class="badge bg-success ms-2">Max: €<%= maxPrice %></span>
+                                            <% } %>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (listings.length===0) { %>
+                            <tr>
+                                <td colspan="3" class="text-center py-5">
+                                    <p class="text-muted mb-0">No listings found matching your search.</p>
+                                    <% if (selectedCategory !=='all' || minPrice || maxPrice) { %>
+                                        <a href="/listings/search?q=<%= searchTerm %>" class="btn btn-link">Clear
+                                            filters</a>
+                                        <% } else { %>
+                                            <a href="/listings" class="btn btn-link">View all listings</a>
+                                            <% } %>
+                                </td>
+                            </tr>
+                            <% } else { %>
+                                <% listings.forEach(listing=> { %>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <%= listing.title %>
+                                            </strong>
+                                            <% if (listing.score> 70) { %>
+                                                <span class="badge bg-warning text-dark ms-2">Best Match</span>
+                                                <% } %>
+                                                    <div class="small text-muted">
+                                                        <%= listing.location %>, <%= listing.country %>
+                                                    </div>
+                                        </td>
+                                        <td>
+                                            <%= listing.description?.substring(0, 100) %>...
+
+                                                <% if (listing.matchDetails?.titleMatch) { %>
+                                                    <span class="badge bg-success ms-2"
+                                                        title="Matches title">Title</span>
+                                                    <% } %>
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="/listings/<%= listing._id %>"
+                                                class="btn btn-sm btn-outline-primary">
+                                                View Details →
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .table td {
+            vertical-align: middle;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: normal;
+        }
+
+        .btn-link {
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+    </style>

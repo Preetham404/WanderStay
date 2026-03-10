@@ -1,0 +1,433 @@
+<% layout("layouts/boilerplate") %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --ink: #1a1a1a;
+            --ink-soft: #444;
+            --ink-muted: #888;
+            --surface: #f7f5f2;
+            --white: #ffffff;
+            --border: #e6e2db;
+            --red: #e8334a;
+            --red-dark: #c4293e;
+            --gold: #c9a84c;
+            --success: #3d7a5a;
+            --tr: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--surface);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--ink);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .auth-page {
+            min-height: 88vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.25rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-page::before {
+            content: '';
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 55vw;
+            height: 55vw;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.07) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .auth-page::after {
+            content: '';
+            position: fixed;
+            bottom: -10%;
+            left: -10%;
+            width: 45vw;
+            height: 45vw;
+            background: radial-gradient(circle, rgba(232, 51, 74, 0.05) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .auth-card {
+            position: relative;
+            z-index: 1;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 2.75rem 2.5rem 3rem;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), 0 20px 60px rgba(0, 0, 0, 0.07);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardIn 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.05s forwards;
+        }
+
+        @keyframes cardIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-icon-wrap {
+            width: 56px;
+            height: 56px;
+            background: var(--ink);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.1rem;
+            box-shadow: 0 4px 14px rgba(26, 26, 26, 0.15);
+        }
+
+        .auth-icon-wrap i {
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .auth-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--ink);
+            letter-spacing: -0.04em;
+            margin-bottom: 0.3rem;
+        }
+
+        .auth-subtitle {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            font-weight: 400;
+        }
+
+        .auth-subtitle a {
+            color: var(--ink);
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin: 1.4rem 0;
+        }
+
+        .auth-divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .auth-divider-text {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--ink-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .field-group {
+            margin-bottom: 1.1rem;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 0.4rem;
+        }
+
+        .field-label .req {
+            color: var(--red);
+            margin-left: 2px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap .field-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-muted);
+            font-size: 0.85rem;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .input-wrap:focus-within .field-icon {
+            color: var(--ink);
+        }
+
+        .form-control {
+            width: 100%;
+            height: 48px;
+            padding: 0 1rem 0 2.75rem;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--ink);
+            background: #faf9f7;
+            transition: var(--tr);
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .form-control:hover {
+            border-color: #c8c4bd;
+            background: var(--white);
+        }
+
+        .form-control:focus {
+            border-color: var(--ink);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.07);
+        }
+
+        .form-control::placeholder {
+            color: var(--ink-muted);
+            font-weight: 300;
+        }
+
+        .was-validated .form-control:valid {
+            border-color: var(--border) !important;
+            background-image: none !important;
+            box-shadow: none !important;
+        }
+
+        .was-validated .form-control:valid:focus {
+            border-color: var(--ink) !important;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.07) !important;
+        }
+
+        .was-validated .form-control:invalid {
+            border-color: var(--red) !important;
+            background-image: none !important;
+        }
+
+        .was-validated .form-control:invalid:focus {
+            border-color: var(--red) !important;
+            box-shadow: 0 0 0 3px rgba(232, 51, 74, 0.08) !important;
+        }
+
+        .field-hint {
+            font-size: 0.76rem;
+            color: var(--red);
+            margin-top: 0.28rem;
+            display: none;
+        }
+
+        .was-validated .form-control:invalid ~ .field-hint {
+            display: block;
+        }
+
+        .pwd-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--ink-muted);
+            font-size: 0.85rem;
+            padding: 0;
+            transition: color 0.2s;
+        }
+
+        .pwd-toggle:hover {
+            color: var(--ink);
+        }
+
+        .btn-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            height: 50px;
+            background: var(--ink);
+            color: var(--white);
+            border: none;
+            border-radius: 100px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            margin-top: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--tr);
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold), #a8873e);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-submit:hover::before {
+            opacity: 1;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+        }
+
+        .btn-submit span,
+        .btn-submit i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-footer-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            line-height: 1.6;
+        }
+
+        .auth-footer-note a {
+            color: var(--ink);
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 2rem 1.35rem 2.5rem;
+                border-radius: 22px;
+            }
+        }
+    </style>
+
+    <div class="auth-page">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-icon-wrap">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <h1 class="auth-title">Create account</h1>
+                <p class="auth-subtitle">
+                    Already have one? <a href="/login">Log in</a>
+                </p>
+            </div>
+
+            <div class="auth-divider">
+                <div class="auth-divider-line"></div>
+                <span class="auth-divider-text">sign up with email</span>
+                <div class="auth-divider-line"></div>
+            </div>
+
+            <form action="/signup" method="POST" class="needs-validation" novalidate id="signupForm">
+                <div class="field-group">
+                    <label class="field-label" for="username">Username <span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <i class="fa-regular fa-user field-icon"></i>
+                        <input name="username" id="username" type="text" class="form-control"
+                            placeholder="e.g. preetham404" required autocomplete="username">
+                        <span class="field-hint">Please choose a username.</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="email">Email <span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <i class="fa-regular fa-envelope field-icon"></i>
+                        <input name="email" id="email" type="email" class="form-control" placeholder="you@example.com"
+                            required autocomplete="email">
+                        <span class="field-hint">Please enter a valid email.</span>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="password">Password <span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-lock field-icon"></i>
+                        <input name="password" id="password" type="password" class="form-control"
+                            placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password">
+                        <button type="button" class="pwd-toggle" id="pwdToggle" aria-label="Show password">
+                            <i class="fa-regular fa-eye" id="pwdIcon"></i>
+                        </button>
+                        <span class="field-hint">Password must be at least 8 characters.</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span>Create Account</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <p class="auth-footer-note">
+                By signing up you agree to our
+                <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('pwdToggle').addEventListener('click', function () {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('pwdIcon');
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            icon.className = show ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            this.classList.add('was-validated');
+        });
+    </script>
