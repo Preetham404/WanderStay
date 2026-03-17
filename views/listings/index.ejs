@@ -206,7 +206,7 @@
       .see-more-btn { display: none !important; }
     }
 
-    @media (min-width: 768px) and (max-width: 1036px) {
+    @media (min-width: 900px) and (max-width: 1036px) {
       .filters-scroll-area {
         overflow-x: auto;
         overflow-y: hidden;
@@ -217,7 +217,7 @@
       #filters { transform: none !important; }
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 899px) {
       .filters-main-container {
         flex-direction: column;
         align-items: stretch;
@@ -281,7 +281,7 @@
       padding-bottom: 4rem;
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 899px) {
       .listings-grid {
         grid-template-columns: 1fr !important;
         gap: 1.5rem !important;
@@ -494,7 +494,7 @@
       box-shadow: var(--shadow-md);
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 899px) {
       .card-fav-btn {
         width: 36px;
         height: 36px;
@@ -751,17 +751,26 @@
   </div>
 
   <script>
+    function isMobileView() {
+      return window.innerWidth < 900;
+    }
+
+    function applyGridLayout(el) {
+      if (isMobileView()) {
+        el.style.gridTemplateColumns = '1fr';
+        el.style.gap = '1.5rem';
+        el.style.marginTop = '1.25rem';
+      } else {
+        el.style.gridTemplateColumns = '';
+        el.style.gap = '';
+        el.style.marginTop = '';
+      }
+    }
+
     (function () {
       const skel = document.getElementById('listings-skeleton');
-      const isMobile = window.innerWidth <= 767;
-      const count = isMobile ? 4 : 8;
-
-      if (isMobile) {
-        skel.style.gridTemplateColumns = '1fr';
-        skel.style.gap = '1.5rem';
-        skel.style.marginTop = '1.25rem';
-      }
-
+      applyGridLayout(skel);
+      const count = isMobileView() ? 4 : 8;
       for (let i = 0; i < count; i++) {
         skel.insertAdjacentHTML('beforeend',
           '<div class="skeleton-item">' +
@@ -777,20 +786,22 @@
     window.addEventListener('load', function () {
       const skel = document.getElementById('listings-skeleton');
       const grid = document.querySelector('.listings-grid');
+
       skel.style.transition = 'opacity 0.3s ease';
       skel.style.opacity = '0';
+
       setTimeout(function () {
         skel.style.display = 'none';
         grid.style.display = 'grid';
-        if (window.innerWidth <= 767) {
-          grid.style.gridTemplateColumns = '1fr';
-          grid.style.gap = '1.5rem';
-          grid.style.marginTop = '1.25rem';
-        }
+        applyGridLayout(grid);
         grid.style.opacity = '0';
         grid.style.transition = 'opacity 0.35s ease';
         requestAnimationFrame(function () { grid.style.opacity = '1'; });
       }, 300);
+
+      window.addEventListener('resize', function () {
+        applyGridLayout(grid);
+      });
     });
 
     document.getElementById("switchCheckDefault").addEventListener("change", function () {
