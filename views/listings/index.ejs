@@ -222,12 +222,7 @@
       #filters { transform: none !important; }
     }
 
-       Key fixes:
-       - Two-row layout: filters on top, tax toggle below
-       - Scrollable filter row
-       - Smaller, tappable filter pills
-       - Tax toggle gets full width on its own row
-    ─────────────────────────────────────────────────────── */
+    /* Mobile styles: filters row + tax toggle */
     @media (max-width: 767px) {
       .filters-main-container {
         flex-direction: column;         
@@ -237,7 +232,6 @@
         gap: 0.4rem;
       }
 
-      
       .filters-scroll-area {
         overflow-x: auto;
         overflow-y: hidden;
@@ -266,7 +260,6 @@
         margin-top: 0.18rem;
       }
 
-      
       .tax-toggel {
         width: 100%;
         justify-content: center;
@@ -485,21 +478,14 @@
       box-shadow: var(--shadow-md);
     }
 
-       Key fixes:
-       - 2-col grid with proper gap
-       - Larger touch targets on fav button
-       - Better card text sizing
-       - Single-col below 380px
-    ─────────────────────────────────────────────────────── */
+    /* Mobile adjustments for cards & empty state */
     @media (max-width: 767px) {
       .listings-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
         margin-top: 1.25rem;
       }
-    }
 
-      
       .card-fav-btn {
         width: 36px;
         height: 36px;
@@ -527,7 +513,6 @@
       .card-location {
         font-size: 0.72rem;
         margin-bottom: 0.35rem;
-        
         white-space: normal;
         display: -webkit-box;
         -webkit-line-clamp: 1;
@@ -601,7 +586,7 @@
 
       .skeleton-item .skel-img { border-radius: 14px; }
     }
-    }
+    
 
     
     .listings-grid { display: none; }
