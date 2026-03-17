@@ -491,17 +491,13 @@
        - Better card text sizing
        - Single-col below 380px
     ─────────────────────────────────────────────────────── */
-    @media (max-width: 640px) {
+    @media (max-width: 767px) {
       .listings-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
         margin-top: 1.25rem;
       }
-
-      .card-img-wrap {
-        border-radius: 14px;
-        margin-bottom: 0.55rem;
-      }
+    }
 
       
       .card-fav-btn {
@@ -544,16 +540,6 @@
 
       .empty-state { padding: 3rem 1.25rem; }
       .empty-state h4 { font-size: 1.15rem; }
-    }
-
-    @media (max-width: 380px) {
-      .listings-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .card-img-wrap { border-radius: 16px; }
-      .card-title    { font-size: 0.9rem; }
     }
 
     @keyframes shimmer {
@@ -606,7 +592,7 @@
     }
 
     
-    @media (max-width: 640px) {
+    @media (max-width: 767px) {
       #listings-skeleton {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -614,6 +600,7 @@
       }
 
       .skeleton-item .skel-img { border-radius: 14px; }
+    }
     }
 
     
@@ -800,7 +787,7 @@
     (function () {
       const skel = document.getElementById('listings-skeleton');
       
-      const count = window.innerWidth <= 640 ? 4 : 8;
+      const count = window.innerWidth <= 767 ? 4 : 8;
       for (let i = 0; i < count; i++) {
         skel.insertAdjacentHTML('beforeend',
           '<div class="skeleton-item">' +
