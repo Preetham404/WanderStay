@@ -491,7 +491,7 @@
        - Better card text sizing
        - Single-col below 380px
     ─────────────────────────────────────────────────────── */
-    @media (max-width: 576px) {
+    @media (max-width: 640px) {
       .listings-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -606,7 +606,7 @@
     }
 
     
-    @media (max-width: 576px) {
+    @media (max-width: 640px) {
       #listings-skeleton {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -800,7 +800,7 @@
     (function () {
       const skel = document.getElementById('listings-skeleton');
       
-      const count = window.innerWidth <= 576 ? 4 : 8;
+      const count = window.innerWidth <= 640 ? 4 : 8;
       for (let i = 0; i < count; i++) {
         skel.insertAdjacentHTML('beforeend',
           '<div class="skeleton-item">' +
