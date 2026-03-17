@@ -195,12 +195,10 @@
 
     @media (min-width: 1037px) {
       .filters-scroll-area { overflow: hidden; }
-
       #filters {
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         transform: translateX(0);
       }
-
       #filters.show-extra { transform: translateX(-480px); }
     }
 
@@ -269,10 +267,32 @@
 
     .listings-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 2rem 1.75rem;
       margin-top: 2rem;
       padding-bottom: 4rem;
+    }
+
+    #listings-skeleton {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem 1.75rem;
+      margin-top: 2rem;
+      padding-bottom: 4rem;
+    }
+
+    @media (max-width: 767px) {
+      .listings-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        margin-top: 1.25rem !important;
+      }
+
+      #listings-skeleton {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        margin-top: 1.25rem !important;
+      }
     }
 
     .listing-item {
@@ -475,12 +495,6 @@
     }
 
     @media (max-width: 767px) {
-      .listings-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-top: 1.25rem;
-      }
-
       .card-fav-btn {
         width: 36px;
         height: 36px;
@@ -520,6 +534,8 @@
 
       .empty-state { padding: 3rem 1.25rem; }
       .empty-state h4 { font-size: 1.15rem; }
+
+      .skeleton-item .skel-img { border-radius: 14px; }
     }
 
     @keyframes shimmer {
@@ -560,24 +576,6 @@
       height: 16px;
       width: 38%;
       display: block;
-    }
-
-    #listings-skeleton {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
-      gap: 2rem 1.75rem;
-      margin-top: 2rem;
-      padding-bottom: 4rem;
-    }
-
-    @media (max-width: 767px) {
-      #listings-skeleton {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-top: 1.25rem;
-      }
-
-      .skeleton-item .skel-img { border-radius: 14px; }
     }
 
     .listings-grid { display: none; }
@@ -755,7 +753,15 @@
   <script>
     (function () {
       const skel = document.getElementById('listings-skeleton');
-      const count = window.innerWidth <= 767 ? 4 : 8;
+      const isMobile = window.innerWidth <= 767;
+      const count = isMobile ? 4 : 8;
+
+      if (isMobile) {
+        skel.style.gridTemplateColumns = '1fr';
+        skel.style.gap = '1.5rem';
+        skel.style.marginTop = '1.25rem';
+      }
+
       for (let i = 0; i < count; i++) {
         skel.insertAdjacentHTML('beforeend',
           '<div class="skeleton-item">' +
@@ -776,6 +782,11 @@
       setTimeout(function () {
         skel.style.display = 'none';
         grid.style.display = 'grid';
+        if (window.innerWidth <= 767) {
+          grid.style.gridTemplateColumns = '1fr';
+          grid.style.gap = '1.5rem';
+          grid.style.marginTop = '1.25rem';
+        }
         grid.style.opacity = '0';
         grid.style.transition = 'opacity 0.35s ease';
         requestAnimationFrame(function () { grid.style.opacity = '1'; });
