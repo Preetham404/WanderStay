@@ -139,7 +139,6 @@
     .filter.active-filter i,
     .filter.active-filter p { color: var(--white) !important; }
 
-    
     .see-more-btn {
       flex-shrink: 0;
       background: transparent;
@@ -166,7 +165,6 @@
 
     .see-more-btn i { font-size: 0.68rem; }
 
-    
     .tax-toggel {
       flex-shrink: 0;
       border: 1.5px solid var(--border);
@@ -206,7 +204,6 @@
       #filters.show-extra { transform: translateX(-480px); }
     }
 
-    
     @media (max-width: 1036px) {
       .see-more-btn { display: none !important; }
     }
@@ -222,10 +219,9 @@
       #filters { transform: none !important; }
     }
 
-    /* Mobile styles: filters row + tax toggle */
     @media (max-width: 767px) {
       .filters-main-container {
-        flex-direction: column;         
+        flex-direction: column;
         align-items: stretch;
         border-radius: 20px;
         padding: 0.5rem 0.5rem 0.6rem;
@@ -273,7 +269,7 @@
 
     .listings-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
       gap: 2rem 1.75rem;
       margin-top: 2rem;
       padding-bottom: 4rem;
@@ -478,7 +474,6 @@
       box-shadow: var(--shadow-md);
     }
 
-    /* Mobile adjustments for cards & empty state */
     @media (max-width: 767px) {
       .listings-grid {
         grid-template-columns: 1fr;
@@ -567,16 +562,14 @@
       display: block;
     }
 
-    
     #listings-skeleton {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
       gap: 2rem 1.75rem;
       margin-top: 2rem;
       padding-bottom: 4rem;
     }
 
-    
     @media (max-width: 767px) {
       #listings-skeleton {
         grid-template-columns: 1fr;
@@ -586,13 +579,10 @@
 
       .skeleton-item .skel-img { border-radius: 14px; }
     }
-    
 
-    
     .listings-grid { display: none; }
   </style>
 
-  
   <% if (typeof isSearch !== 'undefined' && isSearch && searchTerm) { %>
     <div class="container">
       <div class="banner-strip search-banner">
@@ -607,11 +597,9 @@
     </div>
   <% } %>
 
-  
   <div class="container filter-bar-wrap">
     <div class="filters-main-container">
 
-      
       <div class="filters-scroll-area">
         <div id="filters">
 
@@ -690,13 +678,11 @@
         </div>
       </div>
 
-      
       <button class="see-more-btn" id="seeMoreBtn" onclick="toggleFilters()">
         <i class="fa-solid fa-chevron-right" id="seeMoreIcon"></i>
         <span id="seeMoreText">See more</span>
       </button>
 
-      
       <div class="tax-toggel">
         <div class="form-check-reverse form-switch"
           style="margin:0;padding:0;display:flex;align-items:center;gap:.45rem;">
@@ -709,7 +695,6 @@
     </div>
   </div>
 
-  
   <div class="container">
     <div id="listings-skeleton"></div>
 
@@ -768,10 +753,8 @@
   </div>
 
   <script>
-    
     (function () {
       const skel = document.getElementById('listings-skeleton');
-      
       const count = window.innerWidth <= 767 ? 4 : 8;
       for (let i = 0; i < count; i++) {
         skel.insertAdjacentHTML('beforeend',
@@ -799,13 +782,11 @@
       }, 300);
     });
 
-    
     document.getElementById("switchCheckDefault").addEventListener("change", function () {
       document.querySelectorAll(".price-without-tax").forEach(el => el.style.display = this.checked ? "none" : "block");
       document.querySelectorAll(".price-with-tax").forEach(el => el.style.display = this.checked ? "block" : "none");
     });
 
-    
     let showingAll = false;
     function toggleFilters() {
       if (window.innerWidth < 1037) return;
@@ -815,7 +796,6 @@
       document.getElementById('seeMoreText').textContent = showingAll ? 'See less' : 'See more';
     }
 
-    
     const FAV_KEY = 'wanderlust_favs';
     const getFavs = () => { try { return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch { return []; } };
     const saveFavs = f => localStorage.setItem(FAV_KEY, JSON.stringify(f));
@@ -836,7 +816,6 @@
       btn.addEventListener('animationend', () => btn.classList.remove('pop'), { once: true });
     }
 
-    
     (function () {
       const favs = getFavs();
       document.querySelectorAll('.card-fav-btn').forEach(btn => {
