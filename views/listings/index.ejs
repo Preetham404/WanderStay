@@ -30,6 +30,7 @@
 
     a { text-decoration: none; color: inherit; }
 
+    
     .banner-strip {
       border-radius: 12px;
       padding: 0.7rem 1.1rem;
@@ -70,6 +71,7 @@
 
     .banner-clear:hover { opacity: 1; }
 
+    
     .filter-bar-wrap { margin-top: 1rem; }
 
     .filters-main-container {
@@ -193,6 +195,7 @@
       border-color: var(--ink) !important;
     }
 
+    
     @media (min-width: 1037px) {
       .filters-scroll-area { overflow: hidden; }
       #filters {
@@ -206,6 +209,7 @@
       .see-more-btn { display: none !important; }
     }
 
+    
     @media (min-width: 900px) and (max-width: 1036px) {
       .filters-scroll-area {
         overflow-x: auto;
@@ -217,55 +221,7 @@
       #filters { transform: none !important; }
     }
 
-    @media (max-width: 899px) {
-      .filters-main-container {
-        flex-direction: column;
-        align-items: stretch;
-        border-radius: 20px;
-        padding: 0.5rem 0.5rem 0.6rem;
-        gap: 0.4rem;
-      }
-
-      .filters-scroll-area {
-        overflow-x: auto;
-        overflow-y: hidden;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        width: 100%;
-      }
-      .filters-scroll-area::-webkit-scrollbar { display: none; }
-
-      #filters {
-        transform: none !important;
-        gap: 0.25rem;
-        padding: 0.1rem 0.2rem;
-      }
-
-      .filter {
-        min-width: 56px;
-        padding: 0.45rem 0.7rem 0.5rem;
-        flex-shrink: 0;
-      }
-
-      .filter i { font-size: 1.1rem; }
-
-      .filter p {
-        font-size: 0.65rem;
-        margin-top: 0.18rem;
-      }
-
-      .tax-toggel {
-        width: 100%;
-        justify-content: center;
-        border-radius: 12px;
-        padding: 0.5rem 1rem;
-        border-color: var(--border);
-      }
-
-      .tax-toggel .form-check-label { font-size: 0.78rem; }
-    }
-
-    /* Base grid - desktop */
+    
     .listings-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -282,69 +238,7 @@
       padding-bottom: 4rem;
     }
 
-    /* Above 577px up to 899px → 1 column */
-    @media (min-width: 578px) and (max-width: 899px) {
-      .listings-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
-        margin-top: 1.25rem !important;
-      }
-
-      #listings-skeleton {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
-        margin-top: 1.25rem !important;
-      }
-    }
-
     
-   
-
-  
-    @media (min-width: 578px) and (max-width: 899px) {
-      .card-fav-btn {
-        width: 36px;
-        height: 36px;
-        top: 0.6rem;
-        right: 0.6rem;
-      }
-
-      .card-fav-btn svg {
-        width: 15px;
-        height: 15px;
-      }
-
-      .card-badge {
-        font-size: 0.6rem;
-        padding: 0.18rem 0.55rem;
-        top: 0.6rem;
-        left: 0.6rem;
-      }
-
-      .card-title {
-        font-size: 0.84rem;
-        line-height: 1.25;
-      }
-
-      .card-location {
-        font-size: 0.72rem;
-        margin-bottom: 0.35rem;
-        white-space: normal;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .price-amount { font-size: 0.94rem; }
-      .price-label  { font-size: 0.72rem; }
-
-      .empty-state { padding: 3rem 1.25rem; }
-      .empty-state h4 { font-size: 1.15rem; }
-
-      .skeleton-item .skel-img { border-radius: 14px; }
-    }
-
     .listing-item {
       opacity: 0;
       transform: translateY(18px);
@@ -495,6 +389,7 @@
       font-weight: 400;
     }
 
+    
     .empty-state {
       grid-column: 1 / -1;
       text-align: center;
@@ -544,6 +439,7 @@
       box-shadow: var(--shadow-md);
     }
 
+    
     @keyframes shimmer {
       0%   { background-position: -600px 0; }
       100% { background-position:  600px 0; }
@@ -585,6 +481,336 @@
     }
 
     .listings-grid { display: none; }
+
+    /* ════════════════════════════════════════════════════════
+       ██████████  MOBILE REDESIGN  ██████████
+       All rules below ONLY fire at ≤ 899px.
+       PC layout (≥ 900px) is completely untouched.
+    ════════════════════════════════════════════════════════ */
+
+    
+    @media (max-width: 899px) {
+
+      
+      .filters-main-container {
+        flex-direction: row;
+        align-items: center;
+        border-radius: 100px;
+        padding: 0.35rem 0.5rem;
+        gap: 0.4rem;
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+      }
+
+      
+      .filters-scroll-area {
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        min-width: 0;
+      }
+      .filters-scroll-area::-webkit-scrollbar { display: none; }
+
+      #filters {
+        transform: none !important;
+        display: flex;
+        gap: 0.2rem;
+        padding: 0.1rem 0;
+        white-space: nowrap;
+      }
+
+      
+      .filter {
+        flex-direction: row;
+        gap: 0.32rem;
+        padding: 0.38rem 0.75rem;
+        border-radius: 100px;
+        min-width: unset;
+        flex-shrink: 0;
+        border: 1.5px solid var(--border);
+        background: transparent;
+      }
+
+      .filter i {
+        font-size: 0.88rem;
+        margin: 0;
+      }
+
+      .filter p {
+        font-size: 0.72rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--ink-soft);
+      }
+
+      .filter:hover {
+        background: var(--surface);
+        border-color: var(--ink-muted);
+      }
+
+      .filter.active-filter {
+        background: var(--ink);
+        border-color: var(--ink);
+      }
+
+      
+      .tax-toggel {
+        flex-shrink: 0;
+        border-radius: 100px;
+        padding: 0.38rem 0.7rem;
+        gap: 0.35rem;
+        border: 1.5px solid var(--border);
+      }
+
+      .tax-toggel .form-check-label {
+        font-size: 0.7rem;
+        white-space: nowrap;
+      }
+    }
+
+    
+    @media (max-width: 899px) {
+      .banner-strip {
+        font-size: 0.8rem;
+        padding: 0.6rem 0.9rem;
+        margin-top: 0.75rem;
+        border-radius: 10px;
+      }
+    }
+
+    
+    @media (min-width: 578px) and (max-width: 899px) {
+      .listings-grid,
+      #listings-skeleton {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+        margin-top: 1.25rem !important;
+        padding-bottom: 5rem !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      
+      .listing-item .listing-card {
+        display: flex;
+        flex-direction: row;
+        gap: 0.9rem;
+        background: var(--white);
+        border-radius: 16px;
+        padding: 0.75rem;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
+      }
+
+      .listing-item .card-img-wrap {
+        width: 130px;
+        min-width: 130px;
+        height: 110px;
+        aspect-ratio: unset;
+        border-radius: 12px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+
+      .listing-item .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-width: 0;
+        padding: 0.1rem 0;
+      }
+
+      .listing-item .card-title {
+        font-size: 0.88rem;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .listing-item .card-location {
+        font-size: 0.72rem;
+        margin-bottom: 0.3rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .listing-item .price-amount { font-size: 0.97rem; }
+      .listing-item .price-label  { font-size: 0.7rem; }
+
+      .listing-item .card-badge {
+        font-size: 0.58rem;
+        padding: 0.15rem 0.5rem;
+        top: 0.5rem;
+        left: 0.5rem;
+      }
+
+      .listing-item .card-fav-btn {
+        width: 30px;
+        height: 30px;
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+
+      .listing-item .card-fav-btn svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      
+      .skeleton-item {
+        display: flex;
+        flex-direction: row;
+        gap: 0.9rem;
+        background: var(--white);
+        border-radius: 16px;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+      }
+
+      .skeleton-item .skel-img {
+        width: 130px;
+        min-width: 130px;
+        height: 110px;
+        aspect-ratio: unset;
+        border-radius: 12px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+
+      .skeleton-item .skel-lines {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.55rem;
+      }
+
+      .skeleton-item .skel-title  { width: 70%; height: 13px; }
+      .skeleton-item .skel-location { width: 50%; height: 10px; }
+      .skeleton-item .skel-price  { width: 35%; height: 15px; }
+
+      .empty-state { padding: 3rem 1rem; }
+      .empty-state h4 { font-size: 1.1rem; }
+    }
+
+    
+    @media (max-width: 577px) {
+      .listings-grid,
+      #listings-skeleton {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+        margin-top: 1rem !important;
+        padding-bottom: 5rem !important;
+        padding-left: 0.1rem !important;
+        padding-right: 0.1rem !important;
+      }
+
+      
+      .listing-item .listing-card {
+        background: var(--white);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
+      }
+
+      .listing-item .card-img-wrap {
+        border-radius: 0;
+        margin-bottom: 0;
+        aspect-ratio: 1 / 1;
+      }
+
+      .listing-item .card-body {
+        padding: 0.55rem 0.6rem 0.65rem;
+      }
+
+      .listing-item .card-title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        line-height: 1.25;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0.2rem;
+      }
+
+      .listing-item .card-location {
+        font-size: 0.65rem;
+        color: var(--ink-muted);
+        margin-bottom: 0.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .listing-item .price-amount { font-size: 0.85rem; }
+      .listing-item .price-label  { font-size: 0.64rem; }
+
+      .listing-item .card-badge {
+        font-size: 0.56rem;
+        padding: 0.12rem 0.45rem;
+        top: 0.45rem;
+        left: 0.45rem;
+      }
+
+      .listing-item .card-fav-btn {
+        width: 28px;
+        height: 28px;
+        top: 0.4rem;
+        right: 0.4rem;
+      }
+
+      .listing-item .card-fav-btn svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      
+      .skeleton-item .skel-img {
+        border-radius: 0;
+        aspect-ratio: 1 / 1;
+        margin-bottom: 0.5rem;
+      }
+
+      .skeleton-item .skel-title  { width: 75%; height: 12px; margin-bottom: 0.4rem; }
+      .skeleton-item .skel-location { width: 55%; height: 9px;  margin-bottom: 0.5rem; }
+      .skeleton-item .skel-price  { width: 40%; height: 13px; }
+
+      
+      .filters-main-container { padding: 0.3rem 0.4rem; }
+
+      .filter {
+        padding: 0.3rem 0.6rem;
+        gap: 0.25rem;
+      }
+
+      .filter i  { font-size: 0.8rem; }
+      .filter p  { font-size: 0.65rem; }
+
+      .tax-toggel { padding: 0.3rem 0.55rem; }
+      .tax-toggel .form-check-label { font-size: 0.65rem; }
+
+      .empty-state { padding: 2.5rem 0.75rem; }
+      .empty-state h4 { font-size: 1rem; }
+      .empty-icon { width: 48px; height: 48px; }
+      .empty-icon i { font-size: 1.15rem; }
+    }
+
+    
+    @media (max-width: 899px) {
+      .container {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+      }
+    }
   </style>
 
   <% if (typeof isSearch !== 'undefined' && isSearch && searchTerm) { %>
@@ -768,16 +994,16 @@
       const layout = getLayout();
       if (layout === 'single') {
         el.style.gridTemplateColumns = '1fr';
-        el.style.gap = '1.5rem';
+        el.style.gap = '1.25rem';
         el.style.marginTop = '1.25rem';
         el.style.paddingLeft = '';
         el.style.paddingRight = '';
       } else if (layout === 'double') {
         el.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        el.style.gap = '0.85rem';
+        el.style.gap = '0.75rem';
         el.style.marginTop = '1rem';
-        el.style.paddingLeft = '0.25rem';
-        el.style.paddingRight = '0.25rem';
+        el.style.paddingLeft = '0.1rem';
+        el.style.paddingRight = '0.1rem';
       } else {
         el.style.gridTemplateColumns = '';
         el.style.gap = '';
@@ -787,19 +1013,37 @@
       }
     }
 
+    
     (function () {
       const skel = document.getElementById('listings-skeleton');
       applyGridLayout(skel);
-      const count = getLayout() === 'desktop' ? 8 : getLayout() === 'double' ? 6 : 4;
+      const layout = getLayout();
+      const count = layout === 'desktop' ? 8 : layout === 'double' ? 6 : 4;
+
       for (let i = 0; i < count; i++) {
-        skel.insertAdjacentHTML('beforeend',
-          '<div class="skeleton-item">' +
-          '<div class="skel-block skel-img"></div>' +
-          '<div class="skel-block skel-title"></div>' +
-          '<div class="skel-block skel-location"></div>' +
-          '<div class="skel-block skel-price"></div>' +
-          '</div>'
-        );
+        if (layout === 'single') {
+          
+          skel.insertAdjacentHTML('beforeend',
+            '<div class="skeleton-item">' +
+              '<div class="skel-block skel-img"></div>' +
+              '<div class="skel-lines">' +
+                '<div class="skel-block skel-title"></div>' +
+                '<div class="skel-block skel-location"></div>' +
+                '<div class="skel-block skel-price"></div>' +
+              '</div>' +
+            '</div>'
+          );
+        } else {
+          
+          skel.insertAdjacentHTML('beforeend',
+            '<div class="skeleton-item">' +
+              '<div class="skel-block skel-img"></div>' +
+              '<div class="skel-block skel-title"></div>' +
+              '<div class="skel-block skel-location"></div>' +
+              '<div class="skel-block skel-price"></div>' +
+            '</div>'
+          );
+        }
       }
     })();
 
