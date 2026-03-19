@@ -30,7 +30,6 @@
 
     a { text-decoration: none; color: inherit; }
 
-    
     .banner-strip {
       border-radius: 12px;
       padding: 0.7rem 1.1rem;
@@ -51,12 +50,6 @@
       color: #1a5fa0;
     }
 
-    .banner-strip.filter-banner {
-      background: #edf7f0;
-      border-color: #b8e0c5;
-      color: #1e6640;
-    }
-
     .banner-clear {
       padding: 0.28rem 0.85rem;
       border-radius: 100px;
@@ -71,7 +64,6 @@
 
     .banner-clear:hover { opacity: 1; }
 
-    
     .filter-bar-wrap { margin-top: 1rem; }
 
     .filters-main-container {
@@ -133,11 +125,7 @@
     .filter:hover i, .filter:hover p { color: var(--ink); }
     .filter:hover i { transform: translateY(-2px); }
 
-    .filter.active-filter {
-      background: var(--ink);
-      border-color: var(--ink);
-    }
-
+    .filter.active-filter { background: var(--ink); border-color: var(--ink); }
     .filter.active-filter i,
     .filter.active-filter p { color: var(--white) !important; }
 
@@ -159,12 +147,7 @@
       font-weight: 700;
     }
 
-    .see-more-btn:hover {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: white;
-    }
-
+    .see-more-btn:hover { background: var(--ink); border-color: var(--ink); color: white; }
     .see-more-btn i { font-size: 0.68rem; }
 
     .tax-toggel {
@@ -195,7 +178,6 @@
       border-color: var(--ink) !important;
     }
 
-    
     @media (min-width: 1037px) {
       .filters-scroll-area { overflow: hidden; }
       #filters {
@@ -209,7 +191,7 @@
       .see-more-btn { display: none !important; }
     }
 
-    @media (min-width: 900px) and (max-width: 1036px) {
+    @media (min-width: 768px) and (max-width: 1036px) {
       .filters-scroll-area {
         overflow-x: auto;
         overflow-y: hidden;
@@ -220,26 +202,10 @@
       #filters { transform: none !important; }
     }
 
-    @media (max-width: 899px) {
-      .listings-grid,
-      #listings-skeleton,
-      div.listings-grid,
-      div#listings-skeleton {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        grid-template-columns: minmax(0, 1fr) !important;
-        gap: 0 !important;
-        margin-top: 1rem !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-bottom: 5rem !important;
-        width: 100% !important;
-        max-width: 100% !important;
-      }
-    }
-
-    @media (max-width: 899px) {
+    @media (max-width: 767px) {
       .filters-main-container {
+        flex-direction: row;
+        align-items: center;
         border-radius: 100px;
         padding: 0.32rem 0.45rem;
         gap: 0.35rem;
@@ -250,8 +216,7 @@
         overflow-y: hidden;
         scrollbar-width: none;
         -ms-overflow-style: none;
-        flex: 1;
-        min-width: 0;
+        width: 100%;
       }
       .filters-scroll-area::-webkit-scrollbar { display: none; }
 
@@ -272,8 +237,7 @@
       }
 
       .filter i { font-size: 0.85rem; margin: 0; }
-      .filter p  { font-size: 0.7rem; font-weight: 600; margin: 0; color: var(--ink-soft); }
-
+      .filter p { font-size: 0.7rem; font-weight: 600; margin: 0; color: var(--ink-soft); }
       .filter.active-filter { background: var(--ink); border-color: var(--ink); }
       .filter:hover { background: var(--surface); border-color: var(--ink-muted); }
 
@@ -293,192 +257,9 @@
       }
     }
 
-    @media (max-width: 899px) {
-      .listings-grid,
-      #listings-skeleton {
-        grid-template-columns: 1fr !important;
-        gap: 0 !important;
-        margin-top: 1rem !important;
-        padding-bottom: 5rem !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-
-      .listing-item {
-        border-bottom: 1px solid var(--border);
-      }
-
-      .listing-item:last-child {
-        border-bottom: none;
-      }
-
-      .listing-item .listing-card {
-        display: flex;
-        flex-direction: column;
-        background: var(--white);
-        padding: 0.9rem 0.75rem;
-        gap: 0;
-      }
-
-      .listing-item .card-img-wrap {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border-radius: 14px;
-        margin-bottom: 0.7rem;
-        overflow: hidden;
-      }
-
-      .listing-item .card-img-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .listing-item .card-body {
-        padding: 0 0.1rem;
-      }
-
-      .listing-item .card-title {
-        font-size: 0.97rem;
-        font-weight: 700;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 0.18rem;
-      }
-
-      .listing-item .card-location {
-        font-size: 0.78rem;
-        color: var(--ink-muted);
-        margin-bottom: 0.45rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .listing-item .price-amount { font-size: 1rem; font-weight: 800; }
-      .listing-item .price-label  { font-size: 0.74rem; }
-
-      .listing-item .card-badge {
-        font-size: 0.6rem;
-        padding: 0.16rem 0.55rem;
-        top: 0.55rem;
-        left: 0.55rem;
-      }
-
-      .listing-item .card-fav-btn {
-        width: 32px;
-        height: 32px;
-        top: 0.5rem;
-        right: 0.5rem;
-      }
-
-      .listing-item .card-fav-btn svg {
-        width: 14px;
-        height: 14px;
-      }
-
-      .skeleton-item {
-        display: flex;
-        flex-direction: column;
-        background: var(--white);
-        padding: 0.9rem 0.75rem;
-        border-bottom: 1px solid var(--border);
-        gap: 0;
-      }
-
-      .skeleton-item .skel-img {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border-radius: 14px;
-        margin-bottom: 0.7rem;
-      }
-
-      .skeleton-item .skel-title    { width: 62%; height: 13px; margin-bottom: 0.4rem; }
-      .skeleton-item .skel-location { width: 44%; height: 10px; margin-bottom: 0.5rem; }
-      .skeleton-item .skel-price    { width: 32%; height: 15px; }
-
-      .empty-state { padding: 3rem 1rem; }
-      .empty-state h4 { font-size: 1.1rem; }
-    }
-
-    @media (max-width: 575px) {
-      .listings-grid,
-      #listings-skeleton {
-        grid-template-columns: 1fr !important;
-        gap: 0 !important;
-        margin-top: 1rem !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-bottom: 5rem !important;
-      }
-
-      .listing-item .listing-card {
-        display: flex;
-        flex-direction: column;
-        background: var(--white);
-        padding: 0.9rem 0.75rem;
-        gap: 0;
-      }
-
-      .listing-item .card-img-wrap {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border-radius: 14px;
-        margin-bottom: 0.7rem;
-        overflow: hidden;
-      }
-
-      .listing-item .card-body { padding: 0 0.1rem; }
-
-      .listing-item .card-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 0.18rem;
-      }
-
-      .listing-item .card-location {
-        font-size: 0.76rem;
-        margin-bottom: 0.45rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .listing-item .price-amount { font-size: 0.97rem; font-weight: 800; }
-      .listing-item .price-label  { font-size: 0.72rem; }
-
-      .skeleton-item {
-        display: flex;
-        flex-direction: column;
-        background: var(--white);
-        padding: 0.9rem 0.75rem;
-        border-bottom: 1px solid var(--border);
-        gap: 0;
-      }
-
-      .skeleton-item .skel-img {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border-radius: 14px;
-        margin-bottom: 0.7rem;
-      }
-
-      .filters-main-container { padding: 0.28rem 0.4rem; }
-      .filter { padding: 0.28rem 0.6rem; gap: 0.25rem; }
-      .filter i { font-size: 0.8rem; }
-      .filter p { font-size: 0.65rem; }
-      .tax-toggel { padding: 0.28rem 0.55rem; }
-      .tax-toggel .form-check-label { font-size: 0.63rem; }
-    }
-
     .listings-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2rem 1.75rem;
       margin-top: 2rem;
       padding-bottom: 4rem;
@@ -486,13 +267,12 @@
 
     #listings-skeleton {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2rem 1.75rem;
       margin-top: 2rem;
       padding-bottom: 4rem;
     }
 
-    
     .listing-item {
       opacity: 0;
       transform: translateY(18px);
@@ -643,7 +423,6 @@
       font-weight: 400;
     }
 
-    
     .empty-state {
       grid-column: 1 / -1;
       text-align: center;
@@ -662,18 +441,8 @@
     }
 
     .empty-icon i { font-size: 1.5rem; color: var(--ink-muted); }
-
-    .empty-state h4 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-
-    .empty-state p {
-      color: var(--ink-muted);
-      font-size: 0.88rem;
-      margin-bottom: 1.25rem;
-    }
+    .empty-state h4 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .empty-state p { color: var(--ink-muted); font-size: 0.88rem; margin-bottom: 1.25rem; }
 
     .btn-dark-pill {
       background: var(--ink);
@@ -693,7 +462,18 @@
       box-shadow: var(--shadow-md);
     }
 
-    
+    @media (max-width: 767px) {
+      .card-fav-btn { width: 36px; height: 36px; top: 0.6rem; right: 0.6rem; }
+      .card-fav-btn svg { width: 15px; height: 15px; }
+      .card-badge { font-size: 0.6rem; padding: 0.18rem 0.55rem; top: 0.6rem; left: 0.6rem; }
+      .card-title { font-size: 0.88rem; }
+      .card-location { font-size: 0.74rem; margin-bottom: 0.35rem; }
+      .price-amount { font-size: 0.97rem; }
+      .price-label { font-size: 0.72rem; }
+      .empty-state { padding: 3rem 1.25rem; }
+      .empty-state h4 { font-size: 1.15rem; }
+    }
+
     @keyframes shimmer {
       0%   { background-position: -600px 0; }
       100% { background-position:  600px 0; }
@@ -714,44 +494,26 @@
       display: block;
     }
 
-    .skeleton-item .skel-title {
-      height: 14px;
-      width: 65%;
-      margin-bottom: 0.45rem;
-      display: block;
-    }
-
-    .skeleton-item .skel-location {
-      height: 11px;
-      width: 45%;
-      margin-bottom: 0.6rem;
-      display: block;
-    }
-
-    .skeleton-item .skel-price {
-      height: 16px;
-      width: 38%;
-      display: block;
-    }
+    .skeleton-item .skel-title { height: 14px; width: 65%; margin-bottom: 0.45rem; display: block; }
+    .skeleton-item .skel-location { height: 11px; width: 45%; margin-bottom: 0.6rem; display: block; }
+    .skeleton-item .skel-price { height: 16px; width: 38%; display: block; }
 
     .listings-grid { display: none; }
   </style>
 
   <% if (typeof isSearch !== 'undefined' && isSearch && searchTerm) { %>
-    <div class="container">
-      <div class="banner-strip search-banner">
-        <span>
-          <i class="fa-solid fa-magnifying-glass" style="margin-right:.4rem"></i>
-          Results for <strong>"<%= searchTerm %>"</strong>
-        </span>
-        <a href="/listings" class="banner-clear">
-          <i class="fa-solid fa-times" style="margin-right:.3rem"></i>Clear
-        </a>
-      </div>
+    <div class="banner-strip search-banner">
+      <span>
+        <i class="fa-solid fa-magnifying-glass" style="margin-right:.4rem"></i>
+        Results for <strong>"<%= searchTerm %>"</strong>
+      </span>
+      <a href="/listings" class="banner-clear">
+        <i class="fa-solid fa-times" style="margin-right:.3rem"></i>Clear
+      </a>
     </div>
   <% } %>
 
-  <div class="container filter-bar-wrap">
+  <div class="filter-bar-wrap">
     <div class="filters-main-container">
 
       <div class="filters-scroll-area">
@@ -849,88 +611,98 @@
     </div>
   </div>
 
-  <div class="container">
-    <div id="listings-skeleton"></div>
+  <div id="listings-skeleton"></div>
 
-    <div class="listings-grid">
-      <% if (allListings.length === 0) { %>
-        <div class="empty-state">
-          <div class="empty-icon"><i class="fa-solid fa-search"></i></div>
-          <h4>No listings found</h4>
-          <p>Try different keywords or browse everything.</p>
-          <a href="/listings" class="btn-dark-pill">View All Listings</a>
-        </div>
-      <% } else { %>
-        <% for (let listing of allListings) { %>
-          <div class="listing-item">
-            <div class="listing-card" style="position:relative;">
-              <div class="card-img-wrap">
-                <a href="/listings/<%= listing._id %>">
-                  <img src="<%= listing.image.url %>" alt="<%= listing.title %>" loading="lazy">
-                </a>
-                <% if (listing.category) { %>
-                  <span class="card-badge"><%= listing.category %></span>
-                <% } %>
-                <button class="card-fav-btn" aria-label="Save to favourites"
-                  data-id="<%= listing._id %>" onclick="toggleFav(this, event)">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-                  </svg>
-                </button>
-              </div>
-
+  <div class="listings-grid">
+    <% if (allListings.length === 0) { %>
+      <div class="empty-state">
+        <div class="empty-icon"><i class="fa-solid fa-search"></i></div>
+        <h4>No listings found</h4>
+        <p>Try different keywords or browse everything.</p>
+        <a href="/listings" class="btn-dark-pill">View All Listings</a>
+      </div>
+    <% } else { %>
+      <% for (let listing of allListings) { %>
+        <div class="listing-item">
+          <div class="listing-card" style="position:relative;">
+            <div class="card-img-wrap">
               <a href="/listings/<%= listing._id %>">
-                <div class="card-body">
-                  <div class="card-top-row">
-                    <h6 class="card-title"><%= listing.title %></h6>
-                  </div>
-                  <p class="card-location"><%= listing.location %>, <%= listing.country %></p>
-                  <div class="price-without-tax">
-                    <div class="price-line">
-                      <span class="price-amount">&#8377;&nbsp;<%= (listing.price || 0).toLocaleString("en-IN") %></span>
-                      <span class="price-label">/ night</span>
-                    </div>
-                  </div>
-                  <div class="price-with-tax" style="display:none;">
-                    <div class="price-line">
-                      <span class="price-amount">&#8377;&nbsp;<%= ((listing.price || 0) * 1.18).toLocaleString("en-IN", { maximumFractionDigits: 0 }) %></span>
-                      <span class="price-label">/ night incl. taxes</span>
-                    </div>
+                <img src="<%= listing.image.url %>" alt="<%= listing.title %>" loading="lazy">
+              </a>
+              <% if (listing.category) { %>
+                <span class="card-badge"><%= listing.category %></span>
+              <% } %>
+              <button class="card-fav-btn" aria-label="Save to favourites"
+                data-id="<%= listing._id %>" onclick="toggleFav(this, event)">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                </svg>
+              </button>
+            </div>
+
+            <a href="/listings/<%= listing._id %>">
+              <div class="card-body">
+                <div class="card-top-row">
+                  <h6 class="card-title"><%= listing.title %></h6>
+                </div>
+                <p class="card-location"><%= listing.location %>, <%= listing.country %></p>
+                <div class="price-without-tax">
+                  <div class="price-line">
+                    <span class="price-amount">&#8377;&nbsp;<%= (listing.price || 0).toLocaleString("en-IN") %></span>
+                    <span class="price-label">/ night</span>
                   </div>
                 </div>
-              </a>
-            </div>
+                <div class="price-with-tax" style="display:none;">
+                  <div class="price-line">
+                    <span class="price-amount">&#8377;&nbsp;<%= ((listing.price || 0) * 1.18).toLocaleString("en-IN", { maximumFractionDigits: 0 }) %></span>
+                    <span class="price-label">/ night incl. taxes</span>
+                  </div>
+                </div>
+              </div>
+            </a>
           </div>
-        <% } %>
+        </div>
       <% } %>
-    </div>
+    <% } %>
   </div>
 
   <script>
-    function isMobile() { return window.innerWidth < 900; }
+    function isMobile() {
+      return window.innerWidth <= 767;
+    }
 
     function applyGridLayout(el) {
-      if (!isMobile()) {
+      if (isMobile()) {
+        el.style.gridTemplateColumns = '1fr';
+        el.style.gap = '1.5rem';
+        el.style.marginTop = '1.25rem';
+        el.style.paddingLeft = '0';
+        el.style.paddingRight = '0';
+        el.style.width = '100%';
+        el.style.maxWidth = '100%';
+        el.style.boxSizing = 'border-box';
+      } else {
         el.style.gridTemplateColumns = '';
         el.style.gap = '';
         el.style.marginTop = '';
         el.style.paddingLeft = '';
         el.style.paddingRight = '';
-        el.style.paddingBottom = '';
+        el.style.width = '';
+        el.style.maxWidth = '';
       }
     }
 
     (function () {
       const skel = document.getElementById('listings-skeleton');
       applyGridLayout(skel);
-      const count = isMobile() ? 5 : 8;
+      const count = isMobile() ? 4 : 8;
       for (let i = 0; i < count; i++) {
         skel.insertAdjacentHTML('beforeend',
           '<div class="skeleton-item">' +
-            '<div class="skel-block skel-img"></div>' +
-            '<div class="skel-block skel-title"></div>' +
-            '<div class="skel-block skel-location"></div>' +
-            '<div class="skel-block skel-price"></div>' +
+          '<div class="skel-block skel-img"></div>' +
+          '<div class="skel-block skel-title"></div>' +
+          '<div class="skel-block skel-location"></div>' +
+          '<div class="skel-block skel-price"></div>' +
           '</div>'
         );
       }
@@ -946,14 +718,14 @@
       setTimeout(function () {
         skel.style.display = 'none';
         grid.style.display = 'grid';
-        if (!isMobile()) { applyGridLayout(grid); }
+        applyGridLayout(grid);
         grid.style.opacity = '0';
         grid.style.transition = 'opacity 0.35s ease';
         requestAnimationFrame(function () { grid.style.opacity = '1'; });
       }, 300);
 
       window.addEventListener('resize', function () {
-        if (!isMobile()) { applyGridLayout(grid); }
+        applyGridLayout(grid);
       });
     });
 
