@@ -385,6 +385,79 @@
       .empty-state h4 { font-size: 1.1rem; }
     }
 
+    @media (max-width: 575px) {
+      .listings-grid,
+      #listings-skeleton {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+        margin-top: 1rem !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-bottom: 5rem !important;
+      }
+
+      .listing-item .listing-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+        padding: 0.9rem 0.75rem;
+        gap: 0;
+      }
+
+      .listing-item .card-img-wrap {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        margin-bottom: 0.7rem;
+        overflow: hidden;
+      }
+
+      .listing-item .card-body { padding: 0 0.1rem; }
+
+      .listing-item .card-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0.18rem;
+      }
+
+      .listing-item .card-location {
+        font-size: 0.76rem;
+        margin-bottom: 0.45rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .listing-item .price-amount { font-size: 0.97rem; font-weight: 800; }
+      .listing-item .price-label  { font-size: 0.72rem; }
+
+      .skeleton-item {
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+        padding: 0.9rem 0.75rem;
+        border-bottom: 1px solid var(--border);
+        gap: 0;
+      }
+
+      .skeleton-item .skel-img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        margin-bottom: 0.7rem;
+      }
+
+      .filters-main-container { padding: 0.28rem 0.4rem; }
+      .filter { padding: 0.28rem 0.6rem; gap: 0.25rem; }
+      .filter i { font-size: 0.8rem; }
+      .filter p { font-size: 0.65rem; }
+      .tax-toggel { padding: 0.28rem 0.55rem; }
+      .tax-toggel .form-check-label { font-size: 0.63rem; }
+    }
+
     .listings-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -825,12 +898,14 @@
         el.style.marginTop = '1rem';
         el.style.paddingLeft = '0';
         el.style.paddingRight = '0';
+        el.style.paddingBottom = '5rem';
       } else {
         el.style.gridTemplateColumns = '';
         el.style.gap = '';
         el.style.marginTop = '';
         el.style.paddingLeft = '';
         el.style.paddingRight = '';
+        el.style.paddingBottom = '';
       }
     }
 
