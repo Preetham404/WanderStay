@@ -221,6 +221,24 @@
     }
 
     @media (max-width: 899px) {
+      .listings-grid,
+      #listings-skeleton,
+      div.listings-grid,
+      div#listings-skeleton {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 0 !important;
+        margin-top: 1rem !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-bottom: 5rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+
+    @media (max-width: 899px) {
       .filters-main-container {
         border-radius: 100px;
         padding: 0.32rem 0.45rem;
@@ -892,14 +910,7 @@
     function isMobile() { return window.innerWidth < 900; }
 
     function applyGridLayout(el) {
-      if (isMobile()) {
-        el.style.gridTemplateColumns = '1fr';
-        el.style.gap = '0';
-        el.style.marginTop = '1rem';
-        el.style.paddingLeft = '0';
-        el.style.paddingRight = '0';
-        el.style.paddingBottom = '5rem';
-      } else {
+      if (!isMobile()) {
         el.style.gridTemplateColumns = '';
         el.style.gap = '';
         el.style.marginTop = '';
@@ -935,14 +946,14 @@
       setTimeout(function () {
         skel.style.display = 'none';
         grid.style.display = 'grid';
-        applyGridLayout(grid);
+        if (!isMobile()) { applyGridLayout(grid); }
         grid.style.opacity = '0';
         grid.style.transition = 'opacity 0.35s ease';
         requestAnimationFrame(function () { grid.style.opacity = '1'; });
       }, 300);
 
       window.addEventListener('resize', function () {
-        applyGridLayout(grid);
+        if (!isMobile()) { applyGridLayout(grid); }
       });
     });
 
